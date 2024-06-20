@@ -28,7 +28,7 @@ To pull and up one docker service from file, for example, postgres, commands wil
 - `doc postgres pull`
 - `doc postgres up`
 
-This script can be secure management docker, for example here impossible accidentally down all docker services, for this must be passed 'all' apparently 
+This script can be secure management docker, for example here impossible accidentally down all docker services, for this must be passed 'all' explicitly 
 
 Also, `ls` command printed all services and container names from docker compose file
 
