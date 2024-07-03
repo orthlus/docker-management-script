@@ -25,8 +25,8 @@ services:
     image: lscr.io/linuxserver/wireguard:latest
 ```
 To pull and up one docker service from file, for example, postgres, commands will be:
-- `doc postgres pull`
-- `doc postgres up`
+- `doc pg pull`
+- `doc pg up`
 
 This script can be secure management docker, for example here impossible accidentally down all docker services, for this must be passed 'all' explicitly 
 
