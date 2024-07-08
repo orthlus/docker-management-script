@@ -20,7 +20,7 @@ def usage():
     exit(0)
 
 
-def run(_command: str): subprocess.run(_command.split(' '), shell=True)
+def run(_command: str): subprocess.run(_command.split(' '))
 
 
 def get_approve(_command, _service):
