@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import subprocess
 import sys
 import re
@@ -38,11 +38,34 @@ def ls_docker_file():
     with open(docker_file, encoding='utf8') as file:
         content = file.readlines()
 
+    yml_not_services_keys = ['x-logging:', 'volumes:']
+    in_services = False
+    data = {}
+    last_service = ''
     for row in content:
-        if re.match(r'^ {2}[a-z]', row):
-            print(row.strip().split(':')[0])
-        if 'container_name' in row:
-            print(row.replace('container_name:', '').strip())
+        if row.startswith('#'):
+            continue
+        cleaned_row = row.replace('\n', '')
+
+        if cleaned_row == 'services:':
+            in_services = True
+        if cleaned_row in yml_not_services_keys:
+            in_services = False
+
+        if in_services:
+            if re.match(r'^ {2}[a-z]', cleaned_row):
+                service_name = cleaned_row.strip().split(':')[0]
+                data[service_name] = ''
+                last_service = service_name
+            if 'container_name' in cleaned_row:
+                container_name = cleaned_row.replace('container_name:', '').strip()
+                data[last_service] = container_name
+
+    for service, container in data.items():
+        if container == '':
+            print(service)
+        else:
+            print(f'{service} ({container})')
 
 
 def call_helpers():
