@@ -13,10 +13,10 @@ def usage():
     print('\t1.docker service name (required for some commands)')
     print('\t\talso allowed "all" for control all services in file')
     print('\t2.docker command (required)')
-    print('\t\tallowed - ' + ','.join(allowed_commands))
+    print('\t\tallowed - ' + ', '.join(allowed_commands))
     print('\t3.docker compose file (optional)')
     print('\t\tdefault file - ' + docker_compose_default_filename)
-    print('\n\talso there are helpers - ' + ','.join(helpers))
+    print('\n\talso there are helpers - ' + ', '.join(helpers))
     exit(0)
 
 
