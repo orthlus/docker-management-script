@@ -1,10 +1,11 @@
 # Script for management docker compose on linux
-
-## Install:
-- copy doc.py on linux host
-- `chmod +x doc.py`
-
+***
 For easiest call 'doc.py' can be just 'doc'
+
+### Install:
+- copy `doc` file on linux host
+- `mv doc /usr/local/bin/doc`
+- `chmod +x /usr/local/bin/doc`
 
 Also on host must be:
 - installed docker
