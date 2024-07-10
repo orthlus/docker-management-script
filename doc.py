@@ -4,7 +4,7 @@ import sys
 import re
 
 docker_compose_default_filename = 'docker-compose-app.yml'
-allowed_commands = ['up', 'down', 'pull', 'start', 'stop', 'restart', 'logs']
+allowed_commands = ['up', 'down', 'pull', 'start', 'stop', 'restart', 'logs', 'pullup']
 helpers = ['ls']
 
 
@@ -15,6 +15,7 @@ def usage():
         also allowed "all" for control all services in file
     2.docker command (required)
         allowed - {', '.join(allowed_commands)}
+        command "pullup" = 2 commands: pull and up
     3.docker compose file (optional)
         default file - {docker_compose_default_filename}
         also there are helpers - {', '.join(helpers)}
@@ -90,18 +91,31 @@ def call_default():
     if command not in allowed_commands:
         usage()
 
-    if command == 'logs':
-        command = 'logs --follow'
-    if command == 'up':
-        command = 'up -d'
+    if command == 'pullup':
+        if service == 'all':
+            command_to_run1 = f'docker compose -f {docker_file} pull'
+            command_to_run2 = f'docker compose -f {docker_file} up -d'
+        else:
+            command_to_run1 = f'docker compose -f {docker_file} pull {service}'
+            command_to_run2 = f'docker compose -f {docker_file} up -d {service}'
 
-    if service == 'all':
-        command_to_run = f'docker compose -f {docker_file} {command}'
+        get_approve('pull and up', service)
+        run(command_to_run1)
+        run(command_to_run2)
     else:
-        command_to_run = f'docker compose -f {docker_file} {command} {service}'
+        match command:
+            case 'logs':
+                command = 'logs --follow'
+            case 'up':
+                command = 'up -d'
 
-    get_approve(command, service)
-    run(command_to_run)
+        if service == 'all':
+            command_to_run = f'docker compose -f {docker_file} {command}'
+        else:
+            command_to_run = f'docker compose -f {docker_file} {command} {service}'
+
+        get_approve(command, service)
+        run(command_to_run)
 
 
 if __name__ == '__main__':
