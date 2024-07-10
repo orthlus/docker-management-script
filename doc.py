@@ -9,14 +9,17 @@ helpers = ['ls']
 
 
 def usage():
-    print('usage:\n\targs:')
-    print('\t1.docker service name (required for some commands)')
-    print('\t\talso allowed "all" for control all services in file')
-    print('\t2.docker command (required)')
-    print('\t\tallowed - ' + ', '.join(allowed_commands))
-    print('\t3.docker compose file (optional)')
-    print('\t\tdefault file - ' + docker_compose_default_filename)
-    print('\n\talso there are helpers - ' + ', '.join(helpers))
+    usage_str = f'''usage:
+    args:
+    1.docker service name (required for some commands)
+        also allowed "all" for control all services in file
+    2.docker command (required)
+        allowed - {', '.join(allowed_commands)}
+    3.docker compose file (optional)
+        default file - {docker_compose_default_filename}
+        also there are helpers - {', '.join(helpers)}
+    '''
+    print(usage_str)
     exit(0)
 
 
