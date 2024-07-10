@@ -4,7 +4,7 @@ import sys
 import re
 
 docker_compose_default_filename = 'docker-compose-app.yml'
-allowed_commands = ['up', 'down', 'pull', 'start', 'stop', 'restart', 'logs', 'pullup']
+allowed_commands = ['up', 'down', 'pull', 'start', 'stop', 'restart', 'logs', 'pullup', 'bash', 'sh']
 helpers = ['ls']
 
 
@@ -102,6 +102,13 @@ def call_default():
         get_approve('pull and up', service)
         run(command_to_run1)
         run(command_to_run2)
+    elif command in ['bash', 'sh']:
+        if service == 'all':
+            print('for bash specify service')
+            exit(1)
+        command_to_run = f'docker compose -f {docker_file} exec -it {service} {command}'
+        get_approve(command, service)
+        run(command_to_run)
     else:
         match command:
             case 'logs':
