@@ -128,9 +128,12 @@ def call_default():
 if __name__ == '__main__':
     args = sys.argv[1:]
 
-    if len(args) < 1:
-        usage()
-    if args[0] in helpers:
-        call_helpers()
-    else:
-        call_default()
+    try:
+        if len(args) < 1:
+            usage()
+        if args[0] in helpers:
+            call_helpers()
+        else:
+            call_default()
+    except KeyboardInterrupt:
+        exit(0)
